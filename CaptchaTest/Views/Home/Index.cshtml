@@ -1,8 +1,23 @@
-﻿@{
+﻿@using BotDetect.Web.Mvc
+@{
     ViewData["Title"] = "Home Page";
 }
-
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+      rel="stylesheet" type="text/css" />
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <label>Retype the code from the picture:</label>
+    @{ var exampleCaptcha = new MvcCaptcha("ExampleCaptcha") 
+       { UserInputID = "CaptchaCode" }; }
+    <captcha mvc-captcha="exampleCaptcha" />
+    <div class="actions">
+        <input />
+        <input type="submit" value="Validate" />
+        <span></span>
+        @if (ViewContext.IsPost() && ViewData.ModelState.IsValid)
+        {
+            <span class="correct">Correct!</span>
+        }
+    </div>
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
